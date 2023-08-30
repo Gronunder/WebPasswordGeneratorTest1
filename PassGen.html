@@ -1,0 +1,75 @@
+#HTML FOR PASSGEN: 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Password Generator</title>
+	<style>
+		body {
+			background-color: #E0F2F1;
+			font-family: Arial, sans-serif;
+			text-align: center;
+			padding: 30px;
+		}
+
+		h1 {
+			color: #388E3C;
+			font-size: 36px;
+			margin-bottom: 20px;
+		}
+
+		input[type="number"] {
+			background-color: #FFFFFF;
+			border: 1px solid #388E3C;
+			border-radius: 5px;
+			color: #388E3C;
+			font-size: 18px;
+			padding: 10px;
+			text-align: center;
+			width: 60px;
+			margin-right: 20px;
+		}
+
+		input[type="text"] {
+			background-color: #FFFFFF;
+			border: 1px solid #388E3C;
+			border-radius: 5px;
+			color: #388E3C;
+			font-size: 18px;
+			padding: 10px;
+			text-align: center;
+			width: 200px;
+			margin-top: 20px;
+		}
+
+		button {
+			background-color: #388E3C;
+			border: none;
+			border-radius: 5px;
+			color: #FFFFFF;
+			font-size: 18px;
+			padding: 10px 20px;
+			cursor: pointer;
+			margin-top: 20px;
+		}
+	</style>
+	<script>
+		function generatePassword() {
+			var length = document.getElementById("length").value;
+			var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;':,.<>/?`~";
+			var password = "";
+			for (var i = 0, n = charset.length; i < length; ++i) {
+				password += charset.charAt(Math.floor(Math.random() * n));
+			}
+			document.getElementById("password").value = password;
+		}
+	</script>
+</head>
+<body>
+	<h1>Password Generator</h1>
+	<p>Select the length of the password: <input type="number" id="length" value="8"></p>
+	<button onclick="generatePassword()">Generate Password</button>
+	<p>Password: <input type="text" id="password" readonly></p>
+</body>
+
+</html>
