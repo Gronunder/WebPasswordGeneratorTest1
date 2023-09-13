@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
     - name: Create a new EC2 instance
-      community.amazon.aws.ec2:
+      ec2:
         key_name: VTestKey
         group: TestSecurityGroup-V
         instance_type: t2.micro
