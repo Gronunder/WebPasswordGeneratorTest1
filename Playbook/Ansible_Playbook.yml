@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
     - name: Create a new EC2 instance
-      community.aws.ec2_launch_template:
+      ec2:
         key_name: VTestKey
         group: TestSecurityGroup-V
         instance_type: t2.micro
@@ -22,7 +22,7 @@
         groups: launched
       with_items: "{{ ec2.instances }}"
 
-- name: Configure new instance  # Adjusted indentation and removed extra 'tasks' key
+- name: Configure new instance
   hosts: launched
   become: yes
   tasks:
@@ -54,7 +54,7 @@
 
     - name: Retrieve HTML file from GitHub
       get_url:
-        url: https://raw.githubusercontent.com/Gronunder/WebPasswordGeneratorTest1/main/PassGen.html  # Updated URL to raw content
+        url: https://github.com/Gronunder/WebPasswordGeneratorTest1/raw/main/PassGen.html
         dest: /var/www/html/index.html
         mode: '0644'
 
@@ -73,4 +73,5 @@
     - name: Print message indicating Apache has been restarted
       debug:
         msg: "Apache has been restarted."
+
 
