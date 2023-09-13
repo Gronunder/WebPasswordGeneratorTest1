@@ -1,119 +1,79 @@
 ---
-- name: Create Ec2 instances and Configure Apache
+- name: Launch EC2 instance
   hosts: localhost
-  gather_facts: false
+  gather_facts: no
   tasks:
+    - name: Create a new EC2 instance
+      community.amazon.aws.ec2:
+        key_name: VTestKey
+        group: TestSecurityGroup-V
+        instance_type: t2.micro
+        image: ami-07dc0b5cad2999c28  # Basic AWS EC2 Image from the AMI store
+        wait: yes
+        region: us-west-2  # This is the LONDON region used for testing
+        count: 1
+        vpc_subnet_id: subnet-3cb07f70  # Change this to your desired subnet ID
+        assign_public_ip: yes
+      register: ec2
 
-    # Block is a Group of Tasks combined together
-    - name: Get Info Block
-      block: 
-        - name: Get Running instance Info
-          ec2_instance_info:
-          register: ec2info 
+    - name: Add new instance to host group
+      add_host:
+        name: "{{ item.public_ip }}"
+        groups: launched
+      with_items: "{{ ec2.instances }}"
 
-        - name: Print info
-          debug:
-            var: ec2info.instances
-             
-      # By specifying always on the tag, 
-      # I let this block run all the time by module_default
-      # this is for security to not create ec2 instances accidentally
-      tags: ['always', 'getinfoonly']
+- name: Configure new instance  # Adjusted indentation and removed extra 'tasks' key
+  hosts: launched
+  become: yes
+  tasks:
+    - name: Update package cache and install Apache
+      package:
+        name: apache2
+        state: present
 
-    - name: Create EC2 Block
-      block: 
+    - name: Start Apache service
+      service:
+        name: apache2
+        state: started
 
-        - name: Launch ec2 instances
-          tags: create_ec2
-          ec2:
-            region: us-east-1
-            key_name: VTestKey
-            group: TestSecurityGroup-V
-            instance_type: t2.micro
-            image: ami-07dc0b5cad2999c28  # Replace with your desired AMI ID
-            wait: yes
-            wait_timeout: 500
-            count: 2
-            instance_tags:
-              name: appservers
-              os: ubuntu
-            monitoring: no
-            vpc_subnet_id: subnet-3d3ef270  # Replace with your desired subnet ID
-            assign_public_ip: yes
-          register: ec2
-          delegate_to: localhost
+    - name: Open port 80 (HTTP) in the security group
+      ec2_group:
+        name: sg-024b1836b3640207f # Replace with your security group name
+        description: Allow HTTP traffic
+        region: us-west-2  # Change this to your desired region
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
 
-        - name: Add instance to host group
-          add_host:
-            hostname: "{{ item.public_ip }}"
-            groupname: launched
-          loop: "{{ ec2.instances }}"
+    - name: Create HTML directory
+      file:
+        path: /var/www/html
+        state: directory
 
-        - name: Wait for SSH to come up
-          local_action:
-            module: wait_for
-            host: "{{ item.public_ip }}"
-            port: 22
-            delay: 10
-            timeout: 120
-          loop: "{{ ec2.instances }}"
-          
-      # By specifying never on the tag of this block, 
-      # I let this block run only when explicitly being called
-      tags: ['never', 'ec2-create']
+    - name: Retrieve HTML file from GitHub
+      get_url:
+        url: https://raw.githubusercontent.com/Gronunder/WebPasswordGeneratorTest1/main/PassGen.html  # Updated URL to raw content
+        dest: /var/www/html/index.html
+        mode: '0644'
 
-    # Apache Configuration Steps
-    - name: Configure Apache on EC2 instances
-      hosts: launched
-      become: yes
-      tasks:
-        - name: Update package cache and install Apache
-          package:
-            name: apache2
-            state: present
+    - name: Set ownership and permissions
+      file:
+        path: /var/www/html
+        owner: www-data
+        group: www-data
+        mode: '0755'
 
-        - name: Start Apache service
-          service:
-            name: apache2
-            state: started
+    - name: Restart Apache service
+      service:
+        name: apache2
+        state: restarted
 
-        - name: Open port 80 (HTTP) in the security group
-          ec2_group:
-            name: app_sec_group  # Replace with your security group name
-            description: Allow HTTP traffic
-            region: us-east-1    # Change this to your desired region
-            rules:
-              - proto: tcp
-                from_port: 80
-                to_port: 80
-                cidr_ip: 0.0.0.0/0
+    - name: Print message indicating Apache has been restarted
+      debug:
+        msg: "Apache has been restarted."
 
-        - name: Create HTML directory
-          file:
-            path: /var/www/html
-            state: directory
-
-        - name: Retrieve HTML file from GitHub
-          get_url:
-            url: https://github.com/Gronunder/WebPasswordGeneratorTest1/raw/main/PassGen.html
-            dest: /var/www/html/index.html
-            mode: '0644'
-
-        - name: Set ownership and permissions
-          file:
-            path: /var/www/html
-            owner: www-data
-            group: www-data
-            mode: '0755'
-
-        - name: Restart Apache service
-          service:
-            name: apache2
-            state: restarted
-
-        - name: Print message indicating Apache has been restarted
-          debug:
-            msg: "Apache has been restarted."
 
 
 
