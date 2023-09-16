@@ -30,10 +30,12 @@
        register: ec2
 
      - name: Task # 3 Add Tagging to EC2 instance
-       community.aws.ec2_tag:
-        resource: "{{ ec2_result.instance_ids[0] }}"
+       local_action:
+        module: ec2
         region: "{{ region }}"
-        state: present
+        instance_ids: "{{ ec2_result.instance_ids }}"
         tags:
-          Name: WebServer
-          environment: Prod
+          - key: Name
+            value: WebServer
+          - key: environment
+            value: Prod
