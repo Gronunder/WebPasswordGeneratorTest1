@@ -66,5 +66,5 @@
        debug:
         msg: "Apache has been restarted." 
 
-    - name: ensure apache is started
+     - name: ensure apache is started
        service: name=httpd enabled=true state=started   
