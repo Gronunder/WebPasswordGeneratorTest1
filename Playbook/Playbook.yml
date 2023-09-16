@@ -32,20 +32,19 @@
          subnet_id: "{{ vpc_subnet_id }}"
        register: ec2
       
-     - name: Update package cache and install Apache
-       package:
-        name: httpd
-        state: present
+     - name: update ec2 instance
+       yum:
+        name: "*"
+        state: latest
+        update_cache: yes
 
-     - name: Start Apache service
-       service:
+     - name: install apache server
+       yum:
         name: httpd
-        state: started
+        state: latest
 
-     - name: Create HTML directory
-       file:
-        path: /var/www/html
-        state: directory
+     - name: change directory to the html directory
+      shell: cd /var/www/html
 
      - name: Retrieve HTML file from GitHub
        get_url:
@@ -64,6 +63,12 @@
        service:
         name: apache2
         state: restarted
+
+     - name: start apache server, if not started
+       ansible.builtin.service:
+        enabled: yes
+        name: httpd
+        state: started
 
      - name: Print message indicating Apache has been restarted
        debug:
