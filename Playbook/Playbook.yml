@@ -32,12 +32,17 @@
       
      - name: Update package cache and install Apache
        package:
-        name: apache2
+        name: httpd
         state: present
+
+     - name: Confirm Apache service is installed
+        stat:
+          path: /usr/sbin/httpd
+          register: apache_check
 
      - name: Start Apache service
        service:
-        name: apache2
+        name: httpd
         state: started
 
      - name: Create HTML directory
