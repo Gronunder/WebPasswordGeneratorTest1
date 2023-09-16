@@ -42,6 +42,8 @@
        yum:
         name: httpd
         state: present
+       vars:
+        use_backend: yum4
 
      - name: Start Apache service
        service:
