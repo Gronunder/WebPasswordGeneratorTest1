@@ -6,8 +6,8 @@
    tags: provisioning
 
    vars:
-     instance_name: WebServer1
      keypair: VTestKey
+     Instance_name: WebServer2
      instance_type: t2.small
      image: ami-07dc0b5cad2999c28  # Basic AWS EC2 Image from the AMI store
      wait: yes
@@ -31,24 +31,14 @@
        register: ec2
       
      - name: Update package cache and install Apache
-        hosts: your_target_host
-        become: yes
-  
-     - name: Install Apache
        package:
-        name: httpd
+        name: apache2
         state: present
-
-     - name: Confirm Apache service is installed
-       stat:
-        path: /usr/sbin/httpd
-        register: apache_check
 
      - name: Start Apache service
        service:
-        name: httpd
+        name: apache2
         state: started
-        when: apache_check.stat.exists
 
      - name: Create HTML directory
        file:
@@ -57,22 +47,22 @@
 
      - name: Retrieve HTML file from GitHub
        get_url:
-        url: https://raw.githubusercontent.com/Gronunder/WebPasswordGeneratorTest1/main/HTML/PassGen.html
+        url: https://github.com/Gronunder/WebPasswordGeneratorTest1/blob/main/HTML/PassGen.html
         dest: /var/www/html/index.html
         mode: '0644'
 
      - name: Set ownership and permissions
        file:
         path: /var/www/html
-        owner: apache
-        group: apache
+        owner: www-data
+        group: www-data
         mode: '0755'
 
      - name: Restart Apache service
        service:
-        name: httpd
+        name: apache2
         state: restarted
 
      - name: Print message indicating Apache has been restarted
        debug:
-        msg: "Apache has been restarted." 
+        msg: "Apache has been restarted."  
