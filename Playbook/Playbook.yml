@@ -43,7 +43,7 @@
         name: httpd
         state: present
        vars:
-        use_backend: dnf
+        use_backend: dnf5
 
      - name: Start Apache service
        service:
