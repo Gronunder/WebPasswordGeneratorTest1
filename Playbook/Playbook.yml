@@ -32,7 +32,7 @@
      - name: Tag the EC2 instance
        ec2_tag:
          region: "{{ region }}"
-         resource: "{{ item.id }}"
+         resource: "{{ ec2_result.instances[0].id }}"
          state: present
          tags:
            Name: WebServer1
