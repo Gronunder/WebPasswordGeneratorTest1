@@ -57,7 +57,7 @@
 
      - name: Retrieve HTML file from GitHub
        get_url:
-        url: https://github.com/Gronunder/WebPasswordGeneratorTest1/blob/main/PassGen.html
+        url: https://github.com/Gronunder/WebPasswordGeneratorTest1/blob/main/HTML/PassGen.html
         dest: /var/www/html/index.html
         mode: '0644'
 
