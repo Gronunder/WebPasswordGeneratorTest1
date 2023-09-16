@@ -9,6 +9,8 @@
      keypair: VTestKey
      Instance_name: WebServer2
      instance_type: t2.small
+     instance_tag: 
+        name: WebServer
      image: ami-07dc0b5cad2999c28  # Basic AWS EC2 Image from the AMI store
      wait: yes
      group: webserver
