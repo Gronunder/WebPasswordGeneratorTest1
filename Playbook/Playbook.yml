@@ -30,7 +30,7 @@
        register: ec2
 
      - name: Ensure tags are present on a resource
-      community.aws.ec2_tag:
+       community.aws.ec2_tag:
          region: "{{ region }}"
          resource: "{{ ec2.instances[0].id }}"
          state: present
