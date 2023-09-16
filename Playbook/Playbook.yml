@@ -29,12 +29,11 @@
          subnet_id: "{{ vpc_subnet_id }}"
        register: ec2
 
-     - name: Ensure tags are present on a resource
-       amazon.aws.ec2_tag:
-         region: "{{ region }}"
-         resource: "{{ ec2.instances[0].id }}"
-         state: present
-         tags:
-           Name: WebServer1
-           env: prod
-
+     - name: Tag the EC2 instance
+      community.aws.ec2_tag:
+        region: "{{ region }}"
+        resource: "{{ item.id }}"
+        state: present
+        tags:
+          Name: WebServer1
+      with_items: "{{ ec2_result.instances }}"
