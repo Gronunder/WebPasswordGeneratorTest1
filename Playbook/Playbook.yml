@@ -18,11 +18,6 @@
    
    tasks:
      - name: Task # 2 Launch the new EC2 Instance
-       tags:
-          - key: Name
-            value: WebServer
-          - key: environment
-            value: Prod
        community.aws.ec2_instance:  # Updated to 'community.aws.ec2_instance'
          key_name: "{{ keypair }}"
          instance_type: "{{ instance_type }}"
@@ -33,3 +28,55 @@
          wait: "{{ wait }}"
          subnet_id: "{{ vpc_subnet_id }}"
        register: ec2
+      
+     - name: Configure new instance
+         hosts: launched
+         become: yes
+  tasks:
+     - name: Update package cache and install Apache
+       package:
+        name: apache2
+        state: present
+
+     - name: Start Apache service
+       service:
+        name: apache2
+        state: started
+
+     - name: Open port 80 (HTTP) in the security group
+       ec2_group:
+        name: sg-024b1836b3640207f # Replace with your security group name
+        description: Allow HTTP traffic
+        region: us-west-2  # Change this to your desired region
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+
+     - name: Create HTML directory
+       file:
+        path: /var/www/html
+        state: directory
+
+     - name: Retrieve HTML file from GitHub
+       get_url:
+        url: https://github.com/Gronunder/WebPasswordGeneratorTest1/blob/main/PassGen.html
+        dest: /var/www/html/index.html
+        mode: '0644'
+
+     - name: Set ownership and permissions
+       file:
+        path: /var/www/html
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+     - name: Restart Apache service
+       service:
+        name: apache2
+        state: restarted
+
+     - name: Print message indicating Apache has been restarted
+       debug:
+        msg: "Apache has been restarted."  
