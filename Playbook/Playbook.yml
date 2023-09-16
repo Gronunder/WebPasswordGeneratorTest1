@@ -29,7 +29,6 @@
          subnet_id: "{{ vpc_subnet_id }}"
        register: ec2
       
-  tasks:
      - name: Update package cache and install Apache
        package:
         name: apache2
