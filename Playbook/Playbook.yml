@@ -12,4 +12,4 @@ wait: yes
 group: Ansible
 count: 1
 vpc_subnet_id: subnet-3cb07f70  # Change this to your desired subnet ID
-assign_public_ip: yes
+assign_public_ip: yes #This is P-IP
