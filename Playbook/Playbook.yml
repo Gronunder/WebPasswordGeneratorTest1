@@ -39,17 +39,6 @@
         name: apache2
         state: started
 
-     - name: Open port 80 (HTTP) in the security group
-       ec2_group:
-        name: sg-024b1836b3640207f # Replace with your security group name
-        description: Allow HTTP traffic
-        region: us-west-2  # Change this to your desired region
-        rules:
-          - proto: tcp
-            from_port: 80
-            to_port: 80
-            cidr_ip: 0.0.0.0/0
-
      - name: Create HTML directory
        file:
         path: /var/www/html
