@@ -35,11 +35,6 @@
         name: httpd
         state: present
 
-     - name: Confirm Apache service is installed
-        stat:
-          path: /usr/sbin/httpd
-          register: apache_check
-
      - name: Start Apache service
        service:
         name: httpd
