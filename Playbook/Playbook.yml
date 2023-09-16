@@ -1,0 +1,14 @@
+- name: Ansible test
+hosts: localhost
+tasks:
+- name: launching AWS instance using Ansible
+ec2:
+key_name: aws_instance_Ansible
+instance_type: t2.micro
+image: ami-07dc0b5cad2999c28  # Basic AWS EC2 Image from the AMI store
+region: us-west-2  # This is the LONDON region used for testing
+wait: yes
+group: Ansible
+count: 1
+vpc_subnet_id: subnet-3cb07f70  # Change this to your desired subnet ID
+assign_public_ip: yes
