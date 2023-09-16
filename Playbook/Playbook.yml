@@ -30,7 +30,7 @@
        register: ec2
 
      - name: Tag the EC2 instance
-      community.aws.ec2_tag:
+       community.aws.ec2_tag:
         region: "{{ region }}"
         resource: "{{ item.id }}"
         state: present
