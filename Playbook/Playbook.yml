@@ -28,13 +28,7 @@
          wait: "{{ wait }}"
          subnet_id: "{{ vpc_subnet_id }}"
        register: ec2
-
-     - name: Task # 3 Add Tagging to EC2 instance
-       local_action:
-        module: ec2
-        region: "{{ region }}"
-        instance_ids: "{{ ec2_result.instance_ids }}"
-        tags:
+       tags:
           - key: Name
             value: WebServer
           - key: environment
