@@ -39,11 +39,11 @@
         update_cache: yes
 
      - name: Update package cache and install Apache
-       yum:
+       dnf:
         name: httpd
         state: present
        vars:
-        use_backend: yum4
+        use_backend: dnf
 
      - name: Start Apache service
        service:
