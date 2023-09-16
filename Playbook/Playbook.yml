@@ -31,7 +31,7 @@
 
      - name: Task # 3 Add Tagging to EC2 instance
        ec2_tag:
-          resource: "{{ ec2.instances[0].id }}"
+         resource: "{{ ec2.instances[0].id }}"
          region: "{{ region }}"
          state: present
          tags:
