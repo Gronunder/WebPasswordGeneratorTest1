@@ -39,11 +39,9 @@
         update_cache: yes
 
      - name: Update package cache and install Apache
-       dnf:
+       ansible.builtin.dnf:
         name: httpd
         state: present
-       vars:
-        use_backend: dnf5
 
      - name: Start Apache service
        service:
