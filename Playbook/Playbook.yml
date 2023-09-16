@@ -29,9 +29,6 @@
          subnet_id: "{{ vpc_subnet_id }}"
        register: ec2
       
-     - name: Configure new instance
-         hosts: launched
-         become: yes
   tasks:
      - name: Update package cache and install Apache
        package:
