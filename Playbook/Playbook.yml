@@ -44,7 +44,7 @@
         state: latest
 
      - name: change directory to the html directory
-      shell: cd /var/www/html
+       shell: cd /var/www/html
 
      - name: Retrieve HTML file from GitHub
        get_url:
