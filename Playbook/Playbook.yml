@@ -32,12 +32,12 @@
          subnet_id: "{{ vpc_subnet_id }}"
        register: ec2
 
-     - name: Ensure httpd service is installed and enabled
-       ansible.builtin.yum:
-         yum: pkg={{item}} state= present
-         with_item: 
-          - nano 
+     - name: Install the latest version of Apache and nano
+       ansible.builtin.package:
+         name:
           - httpd
+          - nano
+         state: latest
 
      - name: change directory to the html directory
        shell: cd /var/www/html
