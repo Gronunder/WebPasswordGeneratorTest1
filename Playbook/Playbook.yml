@@ -43,7 +43,7 @@
          state: started
          enabled: yes
          become: true
-        vars:
+         vars:
          services:
          - httpd
 
