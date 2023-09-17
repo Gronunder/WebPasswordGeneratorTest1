@@ -39,7 +39,7 @@
 
      - name: Start Apache
        service:
-         name: httpd
+         name: "httpd"
          state: started
          enabled: yes
 
