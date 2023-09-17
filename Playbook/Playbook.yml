@@ -34,12 +34,12 @@
 
      - name: Install apache httpd  (state=present is optional)
        ansible.builtin.apt:
-        name: httpd
+        name: apache2
         state: present
 
      - name: Ensure httpd service is started and enable
        service:
-         name: httpd
+         name: apache2
          state: started
          enabled: true
 
