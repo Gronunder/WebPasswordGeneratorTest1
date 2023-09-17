@@ -11,7 +11,7 @@
      instance_type: t2.small
      instance_tag: 
         name: WebServer
-     image: ami-07dc0b5cad2999c28  # Basic AWS EC2 Image from the AMI store
+     image: ami-0eb260c4d5475b901  # Basic AWS EC2 Image from the AMI store
      wait: yes
      group: webserver
      count: 1
@@ -35,7 +35,7 @@
      - name: Install the latest version of Apache and nano
        ansible.builtin.package:
          name:
-          - apache2
+          - httpd
           - nano
          state: latest
 
@@ -57,13 +57,13 @@
 
      - name: Restart Apache service
        service:
-        name: apache2
+        name: httpd
         state: restarted
 
      - name: start apache server, if not started
        ansible.builtin.service:
         enabled: yes
-        name: apache2
+        name: httpd
         state: started
 
      - name: Print message indicating Apache has been restarted
