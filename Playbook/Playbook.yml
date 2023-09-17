@@ -37,9 +37,9 @@
         name: apache2
         state: present
 
-     - name: Start Apache
+     - name: Ensure httpd service is started and enable
        service:
-         name: "httpd"
+         name: httpd
          state: started
          enabled: yes
 
