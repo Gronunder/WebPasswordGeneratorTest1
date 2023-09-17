@@ -32,16 +32,12 @@
          subnet_id: "{{ vpc_subnet_id }}"
        register: ec2
 
-     - name: Install apache httpd  (state=present is optional)
-       ansible.builtin.apt:
-        name: apache2
-        state: present
-
-     - name: Ensure httpd service is started and enable
-       yum: pkg={{item}} state= present
-       with_item: 
-       - nano 
-       - httpd
+     - name: Ensure httpd service is installed and enabled
+       ansible.builtin.yum:
+         yum: pkg={{item}} state= present
+         with_item: 
+          - nano 
+          - httpd
 
      - name: change directory to the html directory
        shell: cd /var/www/html
