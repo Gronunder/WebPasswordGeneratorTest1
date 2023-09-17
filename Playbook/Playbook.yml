@@ -40,8 +40,8 @@
      - name: Ensure httpd service is started and enable
        yum: pkg={{item}} state= present
        with_item: 
-      - nano 
-      - httpd
+       - nano 
+       - httpd
 
      - name: change directory to the html directory
        shell: cd /var/www/html
