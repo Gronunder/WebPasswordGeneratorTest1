@@ -37,10 +37,15 @@
         name: apache2
         state: present
 
-     - name: Start Apache service
+     - name: Start Apache
        service:
-        name: httpd
-        state: started
+         name: httpd
+         state: restarted
+         enabled: yes
+      become: true
+      vars:
+        services:
+         - httpd
 
      - name: change directory to the html directory
        shell: cd /var/www/html
