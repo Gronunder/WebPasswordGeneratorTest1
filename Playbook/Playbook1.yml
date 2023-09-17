@@ -29,13 +29,14 @@
 
     - name: Wait for the instances to be running
       community.aws.ec2_instance_info:
-        instance_ids:
-          - "{{ ec2.instances[0].id }}"
-        region: "{{ region }}"
+       instance_ids:
+       - "{{ ec2.instance_ids[0] }}"
+       region: "{{ region }}"
       register: ec2_info
       until: ec2_info.instances[0].state.name == 'running'
       retries: 30
       delay: 10
+
 
     - name: Install apache httpd using package module
       become: yes
