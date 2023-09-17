@@ -43,9 +43,6 @@
          state: started
          enabled: yes
          become: true
-         vars:
-         services:
-         - httpd
 
      - name: change directory to the html directory
        shell: cd /var/www/html
