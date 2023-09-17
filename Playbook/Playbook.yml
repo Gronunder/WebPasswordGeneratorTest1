@@ -40,11 +40,11 @@
      - name: Start Apache
        service:
          name: httpd
-         state: restarted
+         state: started
          enabled: yes
-      become: true
-      vars:
-        services:
+         become: true
+        vars:
+         services:
          - httpd
 
      - name: change directory to the html directory
