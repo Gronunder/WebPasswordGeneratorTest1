@@ -37,6 +37,7 @@
       ansible.builtin.yum:  # Using yum package manager for AWS Linux
         name: httpd
         state: present
+        use_backend: yum
 
     # Updated Task: Ensure httpd service is started and enabled
     - name: Ensure httpd service is started and enabled
