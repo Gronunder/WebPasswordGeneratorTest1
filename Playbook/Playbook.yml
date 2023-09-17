@@ -41,7 +41,7 @@
        service:
          name: httpd
          state: started
-         enabled: yes
+         enabled: true
 
      - name: change directory to the html directory
        shell: cd /var/www/html
