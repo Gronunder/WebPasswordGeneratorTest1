@@ -10,8 +10,8 @@
      Instance_name: WebServer2
      instance_type: t2.small
      instance_tag: 
-        name: WebServer
-     image: ami-0eb260c4d5475b901  # Basic AWS EC2 Image from the AMI store
+     name: WebServer
+     image: ami-0eb260c4d5475b901  # Basic AWSUbuntu EC2 Image from the AMI store
      wait: yes
      group: webserver
      count: 1
@@ -35,7 +35,7 @@
      - name: Install the latest version of Apache and nano
        ansible.builtin.package:
          name:
-          - httpd
+          - apache2
           - nano
          state: latest
 
