@@ -34,10 +34,9 @@
 
     # Updated Task: Install Apache (httpd)
     - name: Install apache httpd
-      ansible.builtin.yum:  # Using yum package manager for AWS Linux
+      ansible.builtin.service:  # Using yum package manager for AWS Linux
         name: httpd
         state: present
-        use_backend: yum
       vars:
         ansible_python_interpreter: /usr/bin/python3  # Specify Python 3 interpreter path  
 
