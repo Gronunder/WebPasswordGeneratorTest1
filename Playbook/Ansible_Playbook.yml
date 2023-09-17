@@ -38,6 +38,8 @@
         name: httpd
         state: present
         use_backend: yum
+      vars:
+        ansible_python_interpreter: /usr/bin/python3  # Specify Python 3 interpreter path  
 
     # Updated Task: Ensure httpd service is started and enabled
     - name: Ensure httpd service is started and enabled
