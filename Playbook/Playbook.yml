@@ -38,10 +38,10 @@
         state: present
 
      - name: Ensure httpd service is started and enable
-       service:
-         name: apache2
-         state: started
-         enabled: true
+       yum: pkg={{item}} state= present
+       with_item: 
+      - nano 
+      - httpd
 
      - name: change directory to the html directory
        shell: cd /var/www/html
