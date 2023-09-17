@@ -33,15 +33,13 @@
        register: ec2
       
      - name: update ec2 instance
-       apt:
         name: "*"
         state: latest
         update_cache: yes
 
      - name: Update package cache and install Apache
-       ansible.builtin.dnf:
         name: httpd
-        state: present
+        state: latest
 
      - name: Start Apache service
        service:
