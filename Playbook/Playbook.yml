@@ -35,7 +35,7 @@
      - name: Install the latest version of Apache and nano
        ansible.builtin.package:
          name:
-          - apache2 2.4.52-1ubuntu4.6
+          - httpd.x86_64
           - nano
          state: latest
 
@@ -57,7 +57,7 @@
 
      - name: Restart Apache service
        service:
-        name: apache2
+        name: httpd
         state: restarted
 
      - name: start apache server, if not started
