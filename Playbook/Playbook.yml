@@ -32,12 +32,23 @@
          subnet_id: "{{ vpc_subnet_id }}"
        register: ec2
 
-     - name: Install the latest version of Apache and nano
-       ansible.builtin.package:
-         name:
-          - apache2
-          - nano
-         state: latest
+     - name: Update package cache on Ubuntu
+       become: yes
+       ansible.builtin.apt:
+        update_cache: yes  # This performs 'apt update'
+
+     - name: Install apache httpd on Ubuntu
+       become: yes
+       ansible.builtin.apt:
+        name: apache2  # On Ubuntu, it's apache2, not httpd
+        state: present
+
+     - name: Ensure httpd service is started and enabled
+       become: yes
+       ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: yes
 
      - name: change directory to the html directory
        shell: cd /var/www/html
