@@ -44,7 +44,7 @@
     - name: Ensure httpd service is started and enabled
       ansible.builtin.service:  # Using ansible.builtin.service module
         name: httpd  # Updated to 'httpd' for AWS Linux
-        state: started
+        state: latest
         enabled: true
 
     - name: Change directory to the html directory
