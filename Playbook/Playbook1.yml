@@ -49,8 +49,10 @@
      - name: Update package cache on Ubuntu
        hosts: webserver1
        become: yes
-       ansible.builtin.apt:
-        update_cache: yes  # This performs 'apt update'
+       task:
+       - name: Apt Update 
+         ansible.builtin.apt:
+           update_cache: yes  # This performs 'apt update'
 
      - name: Install apache httpd on Ubuntu
        hosts: webserver1
