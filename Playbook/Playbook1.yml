@@ -43,7 +43,7 @@
      - name: Add new EC2 to host/group
        ansible.builtin.add_host:
         name: "{{ ec2.instances[0].public_dns_name }}"
-        groups: webserver
+        groups: webserver11
         instance_id: "{{ ec2.instances[0].id }}"
 
      - name: Update package cache on Ubuntu
@@ -52,14 +52,14 @@
         update_cache: yes  # This performs 'apt update'
 
      - name: Install apache httpd on Ubuntu
-       hosts: webserver
-        become: yes
-        ansible.builtin.apt:
+       hosts: webserver1
+       become: yes
+       ansible.builtin.apt:
          name: apache2  # On Ubuntu, it's apache2, not httpd
          state: present
 
      - name: Ensure httpd service is started and enabled
-       hosts: webserver
+       hosts: webserver1
        become: yes
        ansible.builtin.service:
         name: apache2
@@ -67,18 +67,18 @@
         enabled: yes
 
      - name: change directory to the html directory
-       hosts: webserver
+       hosts: webserver1
        shell: cd /var/www/html
 
      - name: Retrieve HTML file from GitHub
-       hosts: webserver
+       hosts: webserver1
        get_url:
         url: https://github.com/Gronunder/WebPasswordGeneratorTest1/blob/main/HTML/PassGen.html
         dest: /var/www/html/index.html
         mode: '0644'
 
      - name: Set ownership and permissions
-       hosts: webserver
+       hosts: webserver1
        file:
         path: /var/www/html
         owner: www-data
@@ -86,19 +86,19 @@
         mode: '0755'
 
      - name: Restart Apache service
-       hosts: webserver
+       hosts: webserver1
        service:
         name: apache2
         state: restarted
 
      - name: start apache server, if not started
-       hosts: webserver
+       hosts: webserver1
        ansible.builtin.service:
         enabled: yes
         name: apache2
         state: started
 
      - name: Print message indicating Apache has been restarted
-       hosts: webserver
+       hosts: webserver1
        debug:
         msg: "Apache has been restarted."  
