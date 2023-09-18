@@ -7,7 +7,7 @@
 
    vars:
      keypair: VTestKey
-     Instance_name: WebServer2
+     instance_name: WebServer2
      instance_type: t2.small
      instance_tag: 
      name: WebServer
