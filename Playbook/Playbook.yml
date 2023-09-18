@@ -23,7 +23,6 @@
      - name: Task # 2 Launch the new EC2 Instance
        community.aws.ec2_instance:  # Updated to 'community.aws.ec2_instance'
          key_name: "{{ keypair }}"
-         instance_name: "{{ instance_name }}"
          instance_type: "{{ instance_type }}"
          image_id: "{{ image }}"
          security_groups: "{{ security_group }}"
@@ -32,6 +31,14 @@
          wait: "{{ wait }}"
          subnet_id: "{{ vpc_subnet_id }}"
        register: ec2
+
+     - name: Tag EC2 instance
+       community.aws.ec2_tag:
+        region: "{{ region }}"
+        resource: "{{ ec2.instance_ids[0] }}"
+        state: present
+        tags:
+          Name: "{{ instance_name }}"
 
      - name: Update package cache on Ubuntu
        become: yes
