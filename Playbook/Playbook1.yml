@@ -53,10 +53,10 @@
 
      - name: Install apache httpd on Ubuntu
        hosts: webserver
-       become: yes
-       ansible.builtin.apt:
-        name: apache2  # On Ubuntu, it's apache2, not httpd
-        state: present
+        become: yes
+        ansible.builtin.apt:
+         name: apache2  # On Ubuntu, it's apache2, not httpd
+         state: present
 
      - name: Ensure httpd service is started and enabled
        hosts: webserver
