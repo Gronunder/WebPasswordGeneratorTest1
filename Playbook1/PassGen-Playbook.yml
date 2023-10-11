@@ -7,7 +7,7 @@
     - vars.yml
   tasks:
     - name: Include EC2 Configuration Tasks
-      include_tasks: EC2creation.yaml
+      include_tasks: EC2creation.yml
 
     - name: Pause for 1 minute
       ansible.builtin.pause:

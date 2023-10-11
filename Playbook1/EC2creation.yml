@@ -1,6 +1,5 @@
 ---
 
-
 - name: Task # 2 Launch the new EC2 Instance
   community.aws.ec2_instance:
     key_name: "{{ keypair }}"
