@@ -11,3 +11,5 @@ count: 1
 region: eu-west-2  # This is the LONDON region used for testing
 security_group: TestSecurityGroup-V
 vpc_subnet_id: subnet-3cb07f70  # Change this to your desired subnet ID
+collections:
+  - name: amazon.aws
