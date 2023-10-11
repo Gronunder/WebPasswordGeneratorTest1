@@ -1,0 +1,13 @@
+keypair: VTestKey
+instance_name: WebServer2
+instance_type: t2.micro
+instance_tag:
+  runtime_enviroment: dev
+  webgroup: my_webserver
+image: ami-0eb260c4d5475b901  # Basic AWSUbuntu EC2 Image from the AMI store
+wait: yes
+group: web
+count: 1
+region: eu-west-2  # This is the LONDON region used for testing
+security_group: TestSecurityGroup-V
+vpc_subnet_id: subnet-3cb07f70  # Change this to your desired subnet ID

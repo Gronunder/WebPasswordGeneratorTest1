@@ -1,0 +1,36 @@
+---
+
+
+- name: Run EC2 Configuration
+  hosts: localhost
+  gather_facts: yes
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Include EC2 Configuration Tasks
+      include_tasks: EC2creation.yaml
+
+    - name: Pause for 1 minute
+      ansible.builtin.pause:
+        minutes: 1
+
+ #   - name: Copy public key
+ #     ansible.builtin.copy:
+ #       src: /path/to/your/public_key.pub
+ #       dest: /tmp/public_key.pub
+
+ #   - name: Ensure SSH key is present for user ubuntu
+ #     ansible.builtin.authorized_key:
+ #       user: ubuntu
+ #       key: "{{ lookup('file', '/tmp/public_key.pub') }}"
+ # vars:
+ #   ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+ #   private_key_file: /home/ubuntu/VTestKey.pem
+ #   ansible_ssh_user: "ubuntu"
+ # gather_facts: yes
+- name: Start Webserver Config
+  hosts: my_webserver
+  become: yes
+  tasks:
+    - name: Include tasks from Apache Configuration
+      include_tasks: ApacheConfig.yml

@@ -1,0 +1,50 @@
+---
+
+
+- name: Update package cache
+  become: yes
+  become_method: sudo
+  apt:
+    update_cache: yes
+
+- name: Install apache httpd
+  ansible.builtin.apt:
+    name: apache2
+    state: present
+
+- name: Start and enable Apache2 service
+  service:
+    name: apache2
+    enabled: yes
+    state: started
+
+- name: change directory to the html directory
+  shell: cd /var/www/html
+
+- name: Retrieve HTML file from GitHub
+  get_url:
+    url: https://raw.github.com/Gronunder/WebPasswordGeneratorTest1/main/HTML/PassGen.html
+    dest: /var/www/html/index.html
+    mode: '0644'
+
+- name: Set ownership and permissions
+  file:
+    path: /var/www/html
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Restart Apache service
+  service:
+    name: apache2
+    state: restarted
+
+- name: start apache server, if not started
+  ansible.builtin.service:
+    enabled: yes
+    name: apache2
+    state: started
+
+- name: Print message indicating Apache has been restarted
+  debug:
+    msg: "Apache has been started."
