@@ -1,4 +1,7 @@
 ---
-
 collections:
+  - name: community.aws
+    version: latest
   - name: amazon.aws
+    version: latest
+  - name: ansible.builtin
