@@ -8,9 +8,9 @@
     - name: Include EC2 Configuration Tasks
       include_tasks: EC2creation.yml
 
-    - name: Pause for 1 minute
-      ansible.builtin.pause:
-        minutes: 1
+ #   - name: Pause for 1 minute
+ #     ansible.builtin.pause:
+ #       minutes: 1
 
  #   - name: Copy public key
  #     ansible.builtin.copy:
