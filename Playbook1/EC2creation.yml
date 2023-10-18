@@ -28,7 +28,7 @@
    minutes: 1
 
 - name: Get information about the newly created instance
-  community.aws.ec2_instance_info:
+  amazon.aws.ec2_instance_info:
     region: eu-west-2
     filters:
       instance-state-name: running
