@@ -28,7 +28,7 @@
  # gather_facts: yes
 - name: Start Webserver Config
   hosts: my_webserver
-  #become: yes
+  become: yes
   tasks:
     - name: Include tasks from Apache Configuration
       include_tasks: ApacheConfig.yml
