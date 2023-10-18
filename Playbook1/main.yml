@@ -2,6 +2,8 @@
 
 - name: Run EC2 Configuration
   hosts: localhost
+  vars_files:
+    - vars.yml
   tasks:
     - name: Include EC2 Configuration Tasks
       include_tasks: EC2creation.yml
